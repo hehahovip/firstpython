@@ -53,11 +53,23 @@ def createAthleteByFile(file):
 class Athlete(object):
 	"""docstring for Athlete"""
 	def __init__(self, name, birthdate='',times=[]):
-		super(Athlete, self).__init__()
 		self.name = name
 		self.birthdate = birthdate
 		self.times = times
+		self.testname = "daf"
 
+	@property
 	def top3(self):
-		return top3times(self.times)
+		#return top3times(self.times)
+		return [2:34,4:34, 5:56]
 
+	@property
+	def as_dict(self):
+		#return {'name': self.name, 'DOB': self.birthdate, 'Top3': "self.top3"}
+		return {'name': self.name, 'DOB': self.birthdate, 'Top3': [2:34,4:34, 5:56]}
+
+	
+
+	
+
+	
