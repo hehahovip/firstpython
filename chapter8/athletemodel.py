@@ -1,6 +1,3 @@
-def sayhello():
-	print("hello world!")
-
 class Athlete(object):
 	"""docstring for Athlete"""
 	def __init__(self, name=None, birthdate='',times=[]):
@@ -8,7 +5,7 @@ class Athlete(object):
 		self.birthdate = birthdate
 		self.times = times
 
-	def sanitize(strdata):
+	def sanitized(self, strdata):
 		if '.' in strdata:
 			splitter = '.'
 		elif '-' in strdata:
@@ -22,16 +19,17 @@ class Athlete(object):
 
 		return minute + ':' + secode
 
-	def parsedata(data):
+	def parsedata(self, data):
 		self.name = data.pop(0)
 		self.birthdate = data.pop(0)
-		newlist = [sanitize(item) for item in data]
+		newlist = [self.sanitized(item) for item in data]
 		self.times = newlist
 		return
 
-	def loaddatabyfile(file):
+	def loaddatabyfile(self, filename):
 		with open(filename) as filedata:
-			data = filedata.strip().split(',')
+
+			data = filedata.readline().strip().split(',')
 			self.parsedata(data)
 
 	def top3times(self, list):
@@ -42,8 +40,9 @@ class Athlete(object):
 
 		return uniquelist[0:3]
 
+	@property
 	def top3(self):
-		return top3times(self.times)
+		return self.top3times(self.times)
 
 	def as_dict(self):
-		return {'name': self.name, 'DOB': self.birthdate, 'Top3': "self.top3"}
+		return {'name': self.name, 'DOB': self.birthdate, 'Top3': self.top3}

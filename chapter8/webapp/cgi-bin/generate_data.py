@@ -5,9 +5,8 @@ import json
 import glob
 import yate
 import cgi
+import athletemodel
 from athletemodel import Athlete
-
-
 
 		
 athletes = []
@@ -18,9 +17,9 @@ for each_file in data_files:
 	athletes.append(athlete)
 
 form_data = cgi.FieldStorage()
-#athelete_name = form_data['which_athlete'].value
+athelete_name = form_data['which_athlete'].value
 
-athelete_name = 'James Lee'
+#athelete_name = 'James Lee'
 
 #print("athelete name:", athelete_name)
 
@@ -32,11 +31,5 @@ for each_athlete in athletes:
 	else:
 		pass
 
-
-
-
 print(yate.start_response('application/json'))
-print(type(athlete))
-print(athlete.top3)
-temp = athlete.as_dict
-print(json.dumps(temp))
+print(json.dumps(athlete.as_dict()))

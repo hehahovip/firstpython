@@ -1,12 +1,14 @@
 #! /usr/bin/python3
 
 # Step 2: write a new CGI script to handle the new data request.
-import json
 import glob
-import yate
-import athletemodel #import Athlete
+import json
 
-athletemodel.sayhello()
+import yate
+from athletemodel import Athlete
+
+
+
 
 athletes = []
 data_files = glob.glob("data/*.txt")
@@ -18,7 +20,6 @@ for each_file in data_files:
 names = []
 for each_athlete in athletes:
 	names.append(each_athlete.name)
-
 print(yate.start_response('application/json'))
 print(json.dumps(sorted(names)))
 

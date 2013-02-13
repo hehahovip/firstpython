@@ -1,35 +1,48 @@
+class Athlete(object):
+	"""docstring for Athlete"""
+	def __init__(self, name=None, birthdate='',times=[]):
+		self.name = name
+		self.birthdate = birthdate
+		self.times = times
 
-import pickle
+	def sanitized(self, strdata):
+		if '.' in strdata:
+			splitter = '.'
+		elif '-' in strdata:
+			splitter = '-'
+		elif '.' in strdata:
+			splitter = '.'
+		else:
+			return strdata
+		
+		(minute, secode) = strdata.split(splitter)
 
-from athletelist import AthleteList
+		return minute + ':' + secode
 
-def get_coach_data(filename):
-    try:
-        with open(filename) as f:
-            data = f.readline()
-        templ = data.strip().split(',')
-        return(AthleteList(templ.pop(0), templ.pop(0), templ))
-    except IOError as ioerr:
-        print('File error (get_coach_data): ' + str(ioerr))
-        return(None)
+	def parsedata(self, data):
+		self.name = data.pop(0)
+		self.birthdate = data.pop(0)
+		newlist = [self.sanitized(item) for item in data]
+		self.times = newlist
+		return
 
-def put_to_store(files_list):
-    all_athletes = {}
-    for each_file in files_list:
-        ath = get_coach_data(each_file)
-        all_athletes[ath.name] = ath
-    try:
-        with open('athletes.pickle', 'wb') as athf:
-            pickle.dump(all_athletes, athf)
-    except IOError as ioerr:
-        print('File error (put_and_store): ' + str(ioerr))
-    return(all_athletes)
+	def loaddatabyfile(self, filename):
+		with open(filename) as filedata:
 
-def get_from_store():
-    all_athletes = {}
-    try:
-        with open('athletes.pickle', 'rb') as athf:
-            all_athletes = pickle.load(athf)
-    except IOError as ioerr:
-        print('File error (get_from_store): ' + str(ioerr))
-    return(all_athletes)
+			data = filedata.readline().strip().split(',')
+			self.parsedata(data)
+
+	def top3times(self, list):
+		uniquelist = []
+		for each_item in list:
+			if each_item not in uniquelist:
+				uniquelist.append(each_item)
+
+		return uniquelist[0:3]
+
+	@property
+	def top3(self):
+		return self.top3times(self.times)
+
+	def as_dict(self):
+		return {'name': self.name, 'DOB': self.birthdate, 'Top3': self.top3}
