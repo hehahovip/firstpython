@@ -45,4 +45,4 @@ class Athlete(object):
 		return self.top3times(self.times)
 
 	def as_dict(self):
-		return {'name': self.name, 'DOB': self.birthdate, 'Top3': self.top3}
+		return {'Name': self.name, 'DOB': self.birthdate, 'Top3': self.top3}
